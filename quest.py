@@ -79,9 +79,12 @@ def run():
             q = quest_cmd[q_idx]
 
         for it in range(0, int(w[0])):
-            telega.send_command(q)
+            telega.send_command('🗺Квесты')
 
             message = telega.last_msg()
+            message.click(q_idx)
+            message = telega.last_msg()
+
             last_msg_id = message.id
             if '5' in message.message:
                 util.log("Wait 5 min..")
