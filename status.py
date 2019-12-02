@@ -72,4 +72,4 @@ def is_rest():
 
     util.log("Has_target = " + str(has_target))
 
-    return has_target
+    return not has_target
