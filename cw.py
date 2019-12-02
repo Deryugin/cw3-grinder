@@ -10,7 +10,7 @@ from time import sleep
 from telethon import TelegramClient, sync
 from enum import Enum
 
-import telega, util, status, quest
+import telega, util, status, quest, arena
 
 last_forest_hour = -1
 last_msg_id = -1
@@ -51,6 +51,8 @@ while True:
     if not ((time.hour == 13 or time.hour == 21 or time.hour == 5) and time.minute >= 10):
         util.log("Try quests..")
         quest.run()
+
+    arena.arena_try()
 
     message = telega.last_msg()
 
