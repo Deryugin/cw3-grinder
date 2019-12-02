@@ -50,6 +50,10 @@ def arena_try():
 
     telega.send_command('🗺Квесты');
     message = telega.last_msg()
+    if '📯Арена 🔒' in message.message:
+        limit = True
+        return
+
     message.click(4)
     message = telega.last_msg()
 
