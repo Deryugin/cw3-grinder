@@ -19,6 +19,8 @@ def arena_wait():
             return
         if 'Даже драконы не могут' in message.message:
             return
+        if 'Тебе бы подлечиться.' in message.message:
+            return
         if 'У тебя нет денег, чтобы оплатить вход.' in message.message:
             return
     util.log("Arena waiting timeout!")
@@ -73,7 +75,7 @@ def arena_try():
             telega.send_command('▶️Быстрый бой')
             arena_wait()
             message = telega.last_msg()
-            if 'У тебя нет денег' in message.message:
+            if 'У тебя нет денег' in message.message or 'Тебе бы подлечиться.' in message.message:
                 wait_hr = time.hour
                 return
             if 'Даже драконы не могут' in message.message:
