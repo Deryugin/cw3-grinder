@@ -29,6 +29,26 @@ def req_stam(lines):
 
     return res
 
+def day_time_ok(lines):
+    res = []
+    if 'morning' in lines[0]:
+        res += [util.day_time.MORNING]
+    if 'day' in lines[0]:
+        res += [util.day_time.DAY]
+    if 'evening' in lines[0]:
+        res += [util.day_time.EVENING]
+    if 'night' in lines[0]:
+        res += [util.day_time.NIGHT]
+
+    if len(res) == 0:
+        res = [util.day_time.MORNING, util.day_time.DAY, util.day_time.EVENING, util.day_time.NIGHT]
+
+    time = datetime.datetime.time(datetime.datetime.utcnow())
+    if get_day_time(time) in res:
+        return True
+    else:
+        return False
+
 quest_cmd = ['🌲Лес', '🍄Болото', '⛰️Долина', '🗡ГРАБИТЬ КОРОВАНЫ']
 wait_hr = -1
 def run():
@@ -51,6 +71,10 @@ def run():
     print("Required stamina points: " + str(req_stam(lines)) + ", got " + str(stamina))
 
     if stamina < req_stam(lines):
+        return
+
+    if not day_time_ok(lines):
+        print("Bad day time")
         return
     #if util.get_day_time(time) == util.day_time.NIGHT: # or get_day_time(time) == day_time.EVENING:
     #    telega.send_command('/on_tch')
