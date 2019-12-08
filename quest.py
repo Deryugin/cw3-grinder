@@ -44,7 +44,7 @@ def day_time_ok(lines):
         res = [util.day_time.MORNING, util.day_time.DAY, util.day_time.EVENING, util.day_time.NIGHT]
 
     time = datetime.datetime.time(datetime.datetime.utcnow())
-    if get_day_time(time) in res:
+    if util.get_day_time(time) in res:
         return True
     else:
         return False
@@ -102,30 +102,30 @@ def run():
 
             q = quest_cmd[q_idx]
 
-        for it in range(0, int(w[0])):
-            telega.send_command('🗺Квесты')
+            for it in range(0, int(w[0])):
+                telega.send_command('🗺Квесты')
 
-            message = telega.last_msg()
-            message.click(q_idx)
-            message = telega.last_msg()
+                message = telega.last_msg()
+                message.click(q_idx)
+                message = telega.last_msg()
 
-            last_msg_id = message.id
-            if '5' in message.message:
-                util.log("Wait 5 min..")
-                sleep(5 * 60 + 30)
-            elif '6' in message.message:
-                util.log("Wait 6 min..")
-                sleep(6 * 60 + 30)
-            elif '7' in message.message:
-                util.log("Wait 7 min..")
-                sleep(7 * 60 + 30)
-            elif '8' in message.message:
-                util.log("Wait 8 min..")
-                sleep(8 * 60 + 30)
-            else:
-                util.log("Strange forest time: " + message.message);
-                util.log("Try to wait 5 mins anyway")
-                sleep(5 * 60)
+                last_msg_id = message.id
+                if '5' in message.message:
+                    util.log("Wait 5 min..")
+                    sleep(5 * 60 + 30)
+                elif '6' in message.message:
+                    util.log("Wait 6 min..")
+                    sleep(6 * 60 + 30)
+                elif '7' in message.message:
+                    util.log("Wait 7 min..")
+                    sleep(7 * 60 + 30)
+                elif '8' in message.message:
+                    util.log("Wait 8 min..")
+                    sleep(8 * 60 + 30)
+                else:
+                    util.log("Strange forest time: " + message.message);
+                    util.log("Try to wait 5 mins anyway")
+                    sleep(5 * 60)
 
             message = telega.last_msg()
             if 'И свой факел' in message.message: # Craft a new torch
