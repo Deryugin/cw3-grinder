@@ -23,7 +23,7 @@ class day_time(Enum):
     EVENING = 4
 
 def get_day_time(time):
-    t = (time.hour + 1) % 8
+    t = (time.hour + 2) % 8
     if t < 2:
         return day_time.MORNING
     if t < 4:
