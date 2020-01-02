@@ -13,6 +13,7 @@ from enum import Enum
 
 import util
 import telega
+import pcp
 
 force_upd = True
 stamina = 0
@@ -73,3 +74,16 @@ def is_rest():
     util.log("Has_target = " + str(has_target))
 
     return not has_target
+
+def send_report():
+    m = telega.last_msg()
+    if not 'Твои результаты в бою:' in m.text:
+        print("Failed to send report")
+        return
+
+    dst = pcp.get("report_forward")
+    if dst == "":
+        print("Report destination is not configured")
+        return
+
+    m.forward_to(dst)

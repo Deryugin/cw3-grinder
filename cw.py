@@ -18,18 +18,22 @@ quest_cmd = ['🌲Лес', '🍄Болото', '⛰️Долина']
 
 time = datetime.datetime.time(datetime.datetime.utcnow())
 
+telega.send_command('/report')
+status.send_report()
+
 while True:
     time = datetime.datetime.time(datetime.datetime.utcnow())
 
     message = telega.last_msg()
     if ('завывает по окрестным лугам' in message.message):
-        telega.send_command('/report')
         util.log("Battle is not finished, wait 2 minutes")
         last_msg_id = message.id
         if time.minute < 8:
             sleep(60 * (8 - time.minute))
         else:
             sleep(120)
+        telega.send_command('/report')
+        status.send_report()
         continue
 
     message = telega.last_msg()
@@ -47,6 +51,7 @@ while True:
         util.log("It's defense time! Wait for battle..")
         sleep((60 - time.minute + 8) * 60) # Wait 8 minutes after battle so all stuff is calculated properly
         telega.send_command('/report')
+        status.send_report()
 
     if not ((time.hour == 13 or time.hour == 21 or time.hour == 5) and time.minute >= 10):
         util.log("Try quests..")
