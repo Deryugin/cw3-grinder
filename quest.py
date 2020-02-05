@@ -132,8 +132,11 @@ def run():
                 telega.send_command('/bind_tch')
                 telega.send_command('/on_tch')
 
-            if 'нажми /go' in message.message:
-                util.log("defend the kopobah!")
+            if 'Он пытается ограбить КОРОВАН' in message.message:
+                if '/go' in message.message:
+                    telega.send_command('/go')
+                else:
+                    message.click(0)
 
     status.stamina = 0
     status.force_upd = True
