@@ -6,6 +6,7 @@
 
 import datetime
 import random
+import pcp
 from time import sleep
 from telethon import TelegramClient, sync
 from enum import Enum
@@ -49,7 +50,11 @@ while True:
             util.log("Could not parse any key words")
 
     if (time.hour == 13 or time.hour == 21 or time.hour == 5) and time.minute >= 50 and status.is_rest() == True:
-        telega.send_command('/g_def')
+        def_target = pcp.get("def_target")
+        if def_target == "guild":
+            telega.send_command("/g_def")
+        else:
+            telega.send_command("🛡Защита")
         util.log("It's defense time! Wait for battle..")
         sleep((60 - time.minute + 8) * 60) # Wait 8 minutes after battle so all stuff is calculated properly
         telega.send_command('/report')
