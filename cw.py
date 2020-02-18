@@ -56,7 +56,9 @@ while True:
         else:
             telega.send_command("🛡Защита")
         util.log("It's defense time! Wait for battle..")
-        sleep((60 - time.minute + 8) * 60) # Wait 8 minutes after battle so all stuff is calculated properly
+        for i in range(0, 60):
+            sleep(60 - time.minute + 8) # Wait 8 minutes after battle so all stuff is calculated properly
+            message = telega.last_msg() # Avoid client stall
         telega.send_command('/report')
         status.send_report()
 
