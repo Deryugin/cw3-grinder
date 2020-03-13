@@ -5,8 +5,8 @@ sudo pip3 install setuptools Telethon
 ./cw.py
 ```
 # Windows (stop using it pls)
-1. Download Python 3.8. or Windows
-https://www.python.org/ftp/python/3.8.0/python-3.8.0a1-webinstall.exe
+1. Download Python 3.8.2. for Windows
+https://www.python.org/ftp/python/3.8.2/python-3.8.2-webinstall.exe
 
 2. Press Win+R, then type "cmd", press "Enter", then type following command
 
