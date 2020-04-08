@@ -1,6 +1,5 @@
 import datetime
 import random
-from time import sleep
 from telethon import TelegramClient, sync
 from enum import Enum
 
@@ -106,26 +105,28 @@ def run():
                 telega.send_command('🗺Квесты')
 
                 message = telega.last_msg()
+                if message.button_count < q_idx:
+                    return
                 message.click(q_idx)
                 message = telega.last_msg()
 
                 last_msg_id = message.id
                 if '5' in message.message:
                     util.log("Wait 5 min..")
-                    sleep(5 * 60 + 30)
+                    util.sleep(5 * 60 + 30)
                 elif '6' in message.message:
                     util.log("Wait 6 min..")
-                    sleep(6 * 60 + 30)
+                    util.sleep(6 * 60 + 30)
                 elif '7' in message.message:
                     util.log("Wait 7 min..")
-                    sleep(7 * 60 + 30)
+                    util.sleep(7 * 60 + 30)
                 elif '8' in message.message:
                     util.log("Wait 8 min..")
-                    sleep(8 * 60 + 30)
+                    util.sleep(8 * 60 + 30)
                 else:
                     util.log("Strange forest time: " + message.message);
                     util.log("Try to wait 5 mins anyway")
-                    sleep(5 * 60)
+                    util.sleep(5 * 60)
 
             message = telega.last_msg()
             if 'И свой факел' in message.message: # Craft a new torch
@@ -136,7 +137,8 @@ def run():
                 if '/go' in message.message:
                     telega.send_command('/go')
                 else:
-                    message.click(0)
+                    if message.button_count > 0:
+                        message.click(0)
 
     status.stamina = 0
     status.force_upd = True

@@ -1,6 +1,5 @@
 import datetime
 import random
-from time import sleep
 from telethon import TelegramClient, sync
 from enum import Enum
 
@@ -13,7 +12,7 @@ wait_day = -1
 def arena_wait():
     util.log("Wait for arena finish..")
     for i in range(0,300):
-        sleep(1)
+        util.sleep(1)
         message = telega.last_msg()
         if 'Рейтинги обновлены:' in message.message:
             return
@@ -56,11 +55,14 @@ def arena_try():
         limit = True
         return
 
+    if message.button_count < 4:
+        return
+
     message.click(4)
     message = telega.last_msg()
 
     if 'Ты сейчас занят другим приключением' in message.message:
-        sleep(300)
+        util.sleep(300)
         return
 
     if not 'Пыльный воздух пропитан густым приторным' in message.message:
@@ -71,7 +73,7 @@ def arena_try():
         limit = True
     else:
         for i in range(0, 5):
-            sleep(5)
+            util.sleep(5)
             telega.send_command('▶️Быстрый бой')
             arena_wait()
             message = telega.last_msg()

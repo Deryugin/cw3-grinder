@@ -7,7 +7,6 @@
 import datetime
 import random
 import pcp
-from time import sleep
 from telethon import TelegramClient, sync
 from enum import Enum
 
@@ -30,9 +29,9 @@ while True:
         util.log("Battle is not finished, wait 2 minutes")
         last_msg_id = message.id
         if time.minute < 8:
-            sleep(60 * (8 - time.minute))
+            util.sleep(60 * (8 - time.minute))
         else:
-            sleep(120)
+            util.sleep(120)
         telega.send_command('/report')
         status.send_report()
         continue
@@ -57,7 +56,7 @@ while True:
             telega.send_command("🛡Защита")
         util.log("It's defense time! Wait for battle..")
         for i in range(0, 60):
-            sleep(60 - time.minute + 8) # Wait 8 minutes after battle so all stuff is calculated properly
+            util.sleep(60 - time.minute + 8) # Wait 8 minutes after battle so all stuff is calculated properly
             message = telega.last_msg() # Avoid client stall
         telega.send_command('/report')
         status.send_report()
@@ -83,4 +82,4 @@ while True:
         elif not ('Кто знает' in message.message or 'драконы не могут драться' in message.message or 'отправился' in message.message or 'одолела' in message.message or 'сражение через' in message.message or 'занят другим' in message.message or 'Рейтинги обновлены: /top5 & /top6.' in message.message or 'Получено:' in message.message):
             util.log("Could not parse any key words")
 
-    sleep(30 + random.randrange(0,30))
+    util.sleep(30 + random.randrange(0,30))

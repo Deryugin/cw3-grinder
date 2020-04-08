@@ -6,9 +6,10 @@
 
 import datetime
 import random
-from time import sleep
+import time
 from telethon import TelegramClient, sync
 from enum import Enum
+import pcp, telega
 
 def timestamp(time):
     return (str(time.hour) + ":" + ("0" if time.minute < 10 else "") + str(time.minute) + ":" + ("0" if time.second < 10 else "") + str(time.second))
@@ -39,3 +40,18 @@ def is_number(str):
         return False
     else:
         return True
+
+last_known_msg = ""
+def handle_monsters():
+    global last_known_msg
+    src = pcp.get("monsters_forward")
+    m = telega.last_msg_uname(src)
+    if m.message != last_known_msg:
+        if last_known_msg != "":
+            m.forward_to('@ChatWarsBot')
+        last_known_msg = m.message
+
+def sleep(n):
+    for i in range(0, n):
+        handle_monsters()
+        time.sleep(1)

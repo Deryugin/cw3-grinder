@@ -14,8 +14,10 @@ from enum import Enum
 
 import util
 
-api_hash = # API hash as a string
-api_id = # API ID as a number
+api_hash =
+# API hash as a string
+api_id =
+# API ID as a number
 msg_limit = 20
 client = TelegramClient('session_name', api_id, api_hash)
 sleep(1)
@@ -46,6 +48,18 @@ def last_msg():
     except:
         util.log("Caught exception, return empty string") # wtf should be message type
         return Message(message="", id=0)
+
+def last_msg_uname(uname):
+    global client
+
+    try:
+        msgs = client.get_messages(client.get_entity(uname), limit=1)
+        return msgs[0]
+
+    except:
+        util.log("Caught exception, return empty string") # wtf should be message type
+        return Message(message="", id=0)
+    return ""
 
 def last_offer():
     global client
