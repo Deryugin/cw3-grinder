@@ -49,11 +49,16 @@ def last_msg():
         util.log("Caught exception, return empty string") # wtf should be message type
         return Message(message="", id=0)
 
+entity_dict = { }
 def last_msg_uname(uname):
     global client
+    global entity_dict
 
     try:
-        msgs = client.get_messages(client.get_entity(uname), limit=1)
+        if not uname in entity_dict:
+            entity_dict[uname] = client.get_entity(uname)
+
+        msgs = client.get_messages(entity_dict[uname], limit=1)
         return msgs[0]
 
     except:
