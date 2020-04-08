@@ -46,6 +46,8 @@ def handle_monsters():
     global last_known_msg
     src = pcp.get("monsters_forward")
     m = telega.last_msg_uname(src)
+    if m is None:
+        return
     if m.message != last_known_msg:
         if last_known_msg != "":
             m.forward_to('@ChatWarsBot')
