@@ -42,18 +42,29 @@ def is_number(str):
         return True
 
 last_known_msg = ""
-def handle_monsters():
+def handle_outer_monsters():
     global last_known_msg
-    src = pcp.get("monsters_forward")
+    src = pcp.get("monsters_source")
     m = telega.last_msg_uname(src)
     if m is None:
         return
     if m.message != last_known_msg:
-        if last_known_msg != "":
+        if last_known_msg != "" and "/fight_" in m.message:
+            log("Helping monsters: " + m.message)
             m.forward_to('@ChatWarsBot')
         last_known_msg = m.message
 
+last_self_msg = ""
+def handle_self_monsters():
+    global last_self_msg
+    m = telega.last_msg()
+    if m.message != last_self_msg and "/fight_" in m.message:
+        log("Forwarding: " + m.message)
+        m.forward_to(pcp.get("monsters_dest"))
+        last_self_msg = m.message
+
 def sleep(n):
     for i in range(0, n):
-        handle_monsters()
+        handle_outer_monsters()
+        handle_self_monsters()
         time.sleep(1)
