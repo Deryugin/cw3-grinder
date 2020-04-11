@@ -55,7 +55,7 @@ def last_msg_uname(uname):
     global entity_dict
 
     if uname == "":
-        return
+        return Message(message="", id=0)
 
     if uname[0] != '@':
         uname = int(uname)
@@ -70,7 +70,6 @@ def last_msg_uname(uname):
     except:
         util.log("Caught exception, return empty string") # wtf should be message type
         return Message(message="", id=0)
-    return ""
 
 def last_offer():
     global client
