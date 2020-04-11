@@ -60,7 +60,13 @@ def handle_self_monsters():
     m = telega.last_msg()
     if m.message != last_self_msg and "/fight_" in m.message:
         log("Forwarding: " + m.message)
-        m.forward_to(pcp.get("monsters_dest"))
+        dest = pcp.get("monsters_dest")
+        if dest == "":
+            return
+        if dest[0] != '@':
+            dest = int(dest)
+        m.forward_to(dest)
+
         last_self_msg = m.message
 
 def sleep(n):

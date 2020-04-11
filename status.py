@@ -85,5 +85,6 @@ def send_report():
     if dst == "":
         print("Report destination is not configured")
         return
-
+    if dst[0] != '@':
+        dst = int(dst)
     m.forward_to(dst)

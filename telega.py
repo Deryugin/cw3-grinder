@@ -54,11 +54,17 @@ def last_msg_uname(uname):
     global client
     global entity_dict
 
-    try:
-        if not uname in entity_dict:
-            entity_dict[uname] = client.get_entity(uname)
+    if uname == "":
+        return
 
-        msgs = client.get_messages(entity_dict[uname], limit=1)
+    if uname[0] != '@':
+        uname = int(uname)
+
+    try:
+        if not str(uname) in entity_dict:
+            entity_dict[str(uname)] = client.get_entity(uname)
+
+        msgs = client.get_messages(entity_dict[str(uname)], limit=1)
         return msgs[0]
 
     except:
