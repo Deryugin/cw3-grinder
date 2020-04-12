@@ -48,6 +48,8 @@ def handle_outer_monsters():
     m = telega.last_msg_uname(src)
     if m is None:
         return
+    if m.message is None:
+        return
     if m.message != last_known_msg:
         if last_known_msg != "" and "/fight_" in m.message:
             log("Helping monsters: " + m.message)
@@ -58,6 +60,10 @@ last_self_msg = ""
 def handle_self_monsters():
     global last_self_msg
     m = telega.last_msg()
+    if m is None:
+        return
+    if m.message is None:
+        return
     if m.message != last_self_msg and "/fight_" in m.message:
         log("Forwarding: " + m.message)
         dest = pcp.get("monsters_dest")
