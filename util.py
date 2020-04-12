@@ -54,6 +54,14 @@ def handle_outer_monsters():
         if last_known_msg != "" and "/fight_" in m.message:
             log("Helping monsters: " + m.message)
             m.forward_to('@ChatWarsBot')
+            if "⚜️Forbidden Champion" in m.message and pcp.get("champ_pots") == "true":
+                telega.send_command("/use_p03")
+                telega.send_command("/use_p02")
+                telega.send_command("/use_p01")
+                telega.send_command("/use_p06")
+                telega.send_command("/use_p05")
+                telega.send_command("/use_p04")
+
         last_known_msg = m.message
 
 last_self_msg = ""
