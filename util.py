@@ -51,7 +51,6 @@ def handle_outer_monsters():
     if m.message is None:
         return
     if m.message == last_known_msg:
-        log("already known")
         return
 
     if last_known_msg == "" or not "/fight_" in m.message:
