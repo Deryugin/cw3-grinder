@@ -65,6 +65,10 @@ def handle_outer_monsters():
         log("Low hp: " + str(status.get_hp()))
         return
 
+    if status.get_stamina() < 1:
+        log("No stamina")
+        return
+
     m.forward_to('@ChatWarsBot')
     if "⚜️Forbidden Champion" in m.message and pcp.get("champ_pots") == "true":
         telega.send_command("/use_p03")
