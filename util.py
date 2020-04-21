@@ -9,7 +9,7 @@ import random
 import time
 from telethon import TelegramClient, sync
 from enum import Enum
-import pcp, telega
+import pcp, telega, status
 
 def timestamp(time):
     return (str(time.hour) + ":" + ("0" if time.minute < 10 else "") + str(time.minute) + ":" + ("0" if time.second < 10 else "") + str(time.second))
@@ -50,19 +50,32 @@ def handle_outer_monsters():
         return
     if m.message is None:
         return
-    if m.message != last_known_msg:
-        if last_known_msg != "" and "/fight_" in m.message:
-            log("Helping monsters: " + m.message)
-            m.forward_to('@ChatWarsBot')
-            if "⚜️Forbidden Champion" in m.message and pcp.get("champ_pots") == "true":
-                telega.send_command("/use_p03")
-                telega.send_command("/use_p02")
-                telega.send_command("/use_p01")
-                telega.send_command("/use_p06")
-                telega.send_command("/use_p05")
-                telega.send_command("/use_p04")
+    if m.message == last_known_msg:
+        log("already known")
+        return
 
+    if last_known_msg == "" or not "/fight_" in m.message:
         last_known_msg = m.message
+        return
+
+    last_known_msg = m.message
+
+    log("Helping monsters: " + m.message)
+    fhp = pcp.get("fight_hp")
+    if fhp != "" and int(fhp) > status.get_hp():
+        log("Low hp: " + str(status.get_hp()))
+        return
+
+    m.forward_to('@ChatWarsBot')
+    if "⚜️Forbidden Champion" in m.message and pcp.get("champ_pots") == "true":
+        telega.send_command("/use_p03")
+        telega.send_command("/use_p02")
+        telega.send_command("/use_p01")
+        telega.send_command("/use_p06")
+        telega.send_command("/use_p05")
+        telega.send_command("/use_p04")
+
+    last_known_msg = m.message
 
 last_self_msg = ""
 def handle_self_monsters():
