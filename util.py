@@ -41,6 +41,31 @@ def is_number(str):
     else:
         return True
 
+last_known_location = ""
+def handle_hidden_location():
+    global last_known_location
+
+    m = telega.last_msg()
+    if m is None:
+        return
+
+    if m.message is None:
+        return
+
+    if not "То remember the route you associated it with simple combination:" in m.message:
+        return
+
+    if m.message == last_known_location:
+        return
+
+    last_known_location = m.message
+
+    dst = pcp.get("location_dst")
+    if dst == "":
+        return
+
+    m.forward_to(dst)
+
 last_known_msg = ""
 def handle_outer_monsters():
     global last_known_msg
@@ -101,6 +126,7 @@ def handle_self_monsters():
 
 def sleep(n):
     for i in range(0, n):
+        handle_hidden_location()
         handle_outer_monsters()
         handle_self_monsters()
         time.sleep(1)
