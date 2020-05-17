@@ -126,7 +126,8 @@ def handle_self_monsters():
 
 def sleep(n):
     for i in range(0, n):
-        handle_hidden_location()
-        handle_outer_monsters()
-        handle_self_monsters()
+        if (i % 10) == 0:
+            handle_hidden_location()
+            handle_outer_monsters()
+            handle_self_monsters()
         time.sleep(1)
