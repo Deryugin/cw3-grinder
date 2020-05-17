@@ -92,7 +92,7 @@ def send_command(cmd):
     global game_bot_id, client
 
     try:
-        client.send_message('ChatWarsBot', cmd)
+        client.send_message(game_bot, cmd)
         retry = 0
         util.log('Command is ' + cmd)
         for retry in range(0, 10):
