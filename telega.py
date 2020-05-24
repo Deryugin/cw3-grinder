@@ -87,6 +87,26 @@ def last_offer():
         util.log("Caught exception, return empty string") # wtf should be message type
         return Message(message="", id=0)
 
+def send_msg(uname, text):
+    global client
+    global entity_dict
+
+    if uname == "":
+        return Message(message="", id=0)
+
+    if uname[0] != '@':
+        uname = int(uname)
+
+    try:
+        if not str(uname) in entity_dict:
+            entity_dict[str(uname)] = client.get_entity(uname)
+
+        client.send_message(entity_dict[str(uname)], text)
+        return
+
+    except:
+        util.log("Caught exception, return empty string") # wtf should be message type
+        return
 
 def send_command(cmd):
     global game_bot_id, client
