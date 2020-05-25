@@ -14,10 +14,9 @@ from enum import Enum
 
 import util
 
-api_hash =
-# API hash as a string
-api_id =
-# API ID as a number
+api_hash = pcp.get('api_hash')
+api_id = pcp.get('api_id')
+
 msg_limit = 20
 client = TelegramClient('session_name', api_id, api_hash)
 sleep(1)
