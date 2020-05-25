@@ -12,7 +12,7 @@ from telethon import TelegramClient, sync
 from telethon.tl.custom import Message
 from enum import Enum
 
-import util
+import util, pcp
 
 api_hash = pcp.get('api_hash')
 api_id = pcp.get('api_id')
