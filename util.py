@@ -86,8 +86,9 @@ def handle_outer_monsters():
 
     log("Helping monsters: " + m.message)
     fhp = pcp.get("fight_hp")
-    if fhp != "" and int(fhp) > status.get_hp():
-        log("Low hp: " + str(status.get_hp()))
+    hp = status.get_hp()
+    if fhp != "" and int(fhp) > hp:
+        log("Low hp: " + str(hp))
         return
 
     if status.get_stamina() < 1:
@@ -100,7 +101,7 @@ def handle_outer_monsters():
 
     if 'Ты собрался напасть на врага' in telega.last_msg().message:
         target_chat = pcp.get("monsters_ack_dest")
-        telega.send_msg(target_chat, "+ ❤️" + str(int(status.get_hp())) + "%hp")
+        telega.send_msg(target_chat, "+ ❤️" + str(int(hp)) + "%hp")
 
     if "⚜️Forbidden Champion" in m.message and pcp.get("champ_pots") == "true":
         telega.send_command("/use_p03")
