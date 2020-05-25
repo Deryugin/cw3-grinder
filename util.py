@@ -134,25 +134,27 @@ def handle_self_monsters():
 
 last_bar_msg = ""
 def handle_bartrender():
-    global last_known_msg
+    global last_bar_msg
     src = pcp.get("bartrender_chat")
+    if src == "":
+        return
     m = telega.last_msg_uname(src)
     if m is None:
         return
     if m.message is None:
         return
-    if m.message == last_known_msg:
+    if m.message == last_bar_msg:
         return
 
-    if last_known_msg == "" or \
+    if last_bar_msg == "" or \
             not "/g_withdraw" in m.message or \
             (not " p0" in m.message and \
             not " p1" in m.message and \
             not " p2" in m.message):
-        last_known_msg = m.message
+        last_bar_msg = m.message
         return
 
-    last_known_msg = m.message
+    last_bar_msg = m.message
 
     log("Doing bartrender stuff: " + m.message)
 
@@ -163,8 +165,6 @@ def handle_bartrender():
     last = telega.last_msg()
     if 'Withdrawing' in last.message:
         last.forward_to(telega.get_tentity(src))
-
-    last_known_msg = m.message
 
 def sleep(n):
     for i in range(0, n):
