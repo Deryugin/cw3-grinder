@@ -94,9 +94,9 @@ def handle_outer_monsters():
         log("No stamina")
         return
 
-    m.forward_to('@ChatWarsBot')
+    m.forward_to(telega.game_bot)
 
-    sleep(2)
+    time.sleep(2)
 
     if 'Ты собрался напасть на врага' in telega.last_msg().message:
         target_chat = pcp.get("monsters_ack_dest")
@@ -131,10 +131,45 @@ def handle_self_monsters():
 
         last_self_msg = m.message
 
+last_bar_msg = ""
+def handle_bartrender():
+    global last_known_msg
+    src = pcp.get("bartrender_chat")
+    m = telega.last_msg_uname(src)
+    if m is None:
+        return
+    if m.message is None:
+        return
+    if m.message == last_known_msg:
+        return
+
+    if last_known_msg == "" or \
+            not "/g_withdraw" in m.message or \
+            (not " p0" in m.message and \
+            not " p1" in m.message and \
+            not " p2" in m.message):
+        last_known_msg = m.message
+        return
+
+    last_known_msg = m.message
+
+    log("Doing bartrender stuff: " + m.message)
+
+    m.forward_to(telega.game_bot)
+
+    time.sleep(2)
+
+    last = telega.last_msg()
+    if 'Withdrawing' in last.message:
+        last.forward_to(telega.get_tentity(src))
+
+    last_known_msg = m.message
+
 def sleep(n):
     for i in range(0, n):
         if (i % 10) == 0:
             handle_hidden_location()
             handle_outer_monsters()
             handle_self_monsters()
+            handle_bartrender()
         time.sleep(1)

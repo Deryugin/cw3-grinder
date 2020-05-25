@@ -87,6 +87,21 @@ def last_offer():
         util.log("Caught exception, return empty string") # wtf should be message type
         return Message(message="", id=0)
 
+def get_tentity(uname):
+    global client
+    global entity_dict
+
+    if uname == "":
+        return None
+
+    if uname[0] != '@':
+        uname = int(uname)
+
+    if not str(uname) in entity_dict:
+        entity_dict[str(uname)] = client.get_entity(uname)
+
+    return entity_dict[str(uname)]
+
 def send_msg(uname, text):
     global client
     global entity_dict
