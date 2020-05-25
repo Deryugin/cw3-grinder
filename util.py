@@ -100,7 +100,7 @@ def handle_outer_monsters():
 
     if 'Ты собрался напасть на врага' in telega.last_msg().message:
         target_chat = pcp.get("monsters_ack_dest")
-        telega.send_msg(target_chat, "+ ❤️" + str(status.get_hp()) + "hp")
+        telega.send_msg(target_chat, "+ ❤️" + str(int(status.get_hp())) + "%hp")
 
     if "⚜️Forbidden Champion" in m.message and pcp.get("champ_pots") == "true":
         telega.send_command("/use_p03")
