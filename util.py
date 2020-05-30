@@ -167,10 +167,13 @@ def handle_bartrender():
         last.forward_to(telega.get_tentity(src))
 
 def sleep(n):
-    for i in range(0, n):
-        if (i % 10) == 0:
+    while n >= 0:
+        t1 = time.time()
+        if (n % 10) == 0:
             handle_hidden_location()
             handle_outer_monsters()
             handle_self_monsters()
             handle_bartrender()
         time.sleep(1)
+        t2 = time.time()
+        n = n - int(t2 - t1)
