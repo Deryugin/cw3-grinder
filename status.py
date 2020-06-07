@@ -88,7 +88,7 @@ def is_rest():
 
 def send_report():
     m = telega.last_msg()
-    if not 'Твои результаты в бою:' in m.text:
+    if not 'Твои результаты в бою:' in m.message:
         print("Failed to send report")
         return
 
