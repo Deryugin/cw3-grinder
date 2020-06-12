@@ -3,7 +3,7 @@ import random
 from telethon import TelegramClient, sync
 from enum import Enum
 
-import telega, util, status
+import telega, util, status, pcp
 
 def is_number(str):
     try:
@@ -26,7 +26,11 @@ def req_stam(lines):
             else:
                 res = res + int(w[0])
 
-    return res
+    save_stam = pcp.get('save_stam')
+    if save_stam == '':
+        return res
+    else:
+        return res + int(save_stam)
 
 def day_time_ok(lines):
     res = []
