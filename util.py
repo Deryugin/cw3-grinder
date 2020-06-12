@@ -177,3 +177,40 @@ def sleep(n):
         time.sleep(1)
         t2 = time.time()
         n = n - int(t2 - t1)
+
+def try_buy(code, max_cost):
+    amount = int(status.get_money() / max_cost)
+    if amount == 0:
+        return
+    telega.send_command("/wtb_"+str(code)+"_"+str(amount))
+    return
+
+def transmute_try():
+    trm_from = pcp.get("trm_from")
+    trm_to = pcp.get("trm_to")
+    trm_mana = pcp.get("trm_mana")
+
+    if trm_from == '' or trm_to == '' or trm_mana == '':
+        return
+
+    if status.get_mana() < int(trm_mana):
+        return
+
+    herbs = status.get_herbs()
+
+    force_upd = False
+    for h in trm_from.split(','):
+        h = int(h)
+        if (h == 0) or not h in herbs:
+            continue
+
+        if herbs[h] >= 250 and status.get_mana() > int(trm_mana):
+            force_upd = True
+            trm_cmd = '/use_trm ' + str(h) + ' ' + trm_to
+            telega.send_command(trm_cmd)
+
+        if random.random() < 0.1:
+            try_buy(h, 1)
+
+    if force_upd:
+        status.upd()

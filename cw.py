@@ -67,6 +67,8 @@ while True:
 
     arena.arena_try()
 
+    util.transmute_try()
+
     message = telega.last_msg()
 
     if message.id != last_msg_id:
