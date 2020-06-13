@@ -199,15 +199,19 @@ def transmute_try():
     herbs = status.get_herbs()
 
     force_upd = False
+    do_trm = True
     for h in trm_from.split(','):
         h = int(h)
         if (h == 0) or not h in herbs:
             continue
 
-        if herbs[h] >= 250 and status.get_mana() > int(trm_mana):
+        if do_trm and herbs[h] >= 50 and status.get_mana() > int(trm_mana):
             force_upd = True
             trm_cmd = '/use_trm ' + str(h) + ' ' + trm_to
             telega.send_command(trm_cmd)
+            if '[Недостаточно маны]' in telega.last_msg().message:
+                do_trm = False
+
 
         if random.random() < 0.1:
             try_buy(h, 1)
