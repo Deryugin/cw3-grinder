@@ -179,11 +179,12 @@ def sleep(n):
         n = n - int(t2 - t1)
 
 def try_buy(code, max_cost):
+    telega.send_command("/t"+str(code))
     amount = int(status.get_money() / max_cost)
-    if amount == 0:
-        return
-    telega.send_command("/wtb_"+str(code)+"_"+str(amount))
-    return
+    if 'по ' + str(amount) + '💰' in telega.last_msg().message:
+        if amount == 0:
+            return
+        telega.send_command("/wtb_"+str(code)+"_"+str(amount))
 
 def transmute_try():
     trm_from = pcp.get("trm_from")
