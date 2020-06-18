@@ -208,7 +208,7 @@ def get_stock():
     txt = telega.last_msg().message
     ret = {}
     for line in txt.split('\n'):
-        if line[0] == '/':
+        if '/' in line:
             continue
         res = parse('{} ({})', line)
         if res == None:
