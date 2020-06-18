@@ -179,7 +179,7 @@ def sleep(n):
         n = n - int(t2 - t1)
 
 def try_buy(code, max_cost):
-    telega.send_command("/t"+str(code))
+    telega.send_command("/t_"+str(code))
     amount = int(status.get_money() / max_cost)
     if 'по ' + str(amount) + '💰' in telega.last_msg().message:
         if amount == 0:
