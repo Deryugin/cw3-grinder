@@ -223,7 +223,10 @@ def transmute_try():
 def stash_resources():
     stock = status.get_stock();
     stash_resources = pcp.get("stash_resources")
+    if stash_resources == "":
+        return
+
     for r in stash_resources.split(','):
         r = int(r)
-        if stock[r] > 0:
+        if r in stock and stock[r] > 0:
             telega.send_command("/g_deposit " + str(r) + " " + str(stock[r]))
