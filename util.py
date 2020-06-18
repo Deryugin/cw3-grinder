@@ -219,3 +219,11 @@ def transmute_try():
 
     if force_upd:
         status.upd()
+
+def stash_resources():
+    stock = status.get_stock();
+    stash_resources = pcp.get("stash_resources")
+    for r in stash_resources.split(','):
+        r = int(r)
+        if stock[r] > 0:
+            telega.send_command("/g_deposit " + str(r) + " " + str(stock[r]))

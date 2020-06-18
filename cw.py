@@ -48,16 +48,16 @@ while True:
         elif not ('Кто знает' in message.message or 'драконы не могут драться' in message.message or 'отправился' in message.message or 'одолела' in message.message or 'сражение через' in message.message or 'занят другим' in message.message or 'Рейтинги обновлены: /top5 & /top6.' in message.message or 'Получено:' in message.message):
             util.log("Could not parse any key words")
 
-    if (time.hour == 13 or time.hour == 21 or time.hour == 5) and time.minute >= 50 and status.is_rest() == True:
-        def_target = pcp.get("def_target")
-        if def_target == "guild":
-            telega.send_command("/g_def")
-        else:
-            telega.send_command("🛡Защита")
-        util.log("It's defense time! Wait for battle..")
-        for i in range(0, 60):
-            util.sleep(60 - time.minute + 8) # Wait 8 minutes after battle so all stuff is calculated properly
-            message = telega.last_msg() # Avoid client stall
+    if (time.hour == 13 or time.hour == 21 or time.hour == 5) and time.minute >= 50:
+        if status.is_rest() == True:
+            def_target = pcp.get("def_target")
+            if def_target == "guild":
+                telega.send_command("/g_def")
+            else:
+                telega.send_command("🛡Защита")
+            util.log("It's defense time! Wait for battle..")
+        util.stash_resources()
+        util.sleep(60 * (60 - time.minute + 8)) # Wait 8 minutes after battle so all stuff is calculated properly
         telega.send_command('/report')
         status.send_report()
 

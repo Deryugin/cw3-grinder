@@ -150,6 +150,46 @@ herb_by_name = { 'Stinky Sumac' : 39,
         'Mammoth Dill' : 68,
         'Silver dust' : 69 }
 
+resource_by_name = {
+        'Thread' : 1,
+        'Stick' : 2,
+        'Pelt' : 3,
+        'Bone' : 4,
+        'Coal' : 5,
+        'Charcoal' : 6,
+        'Powder' : 7,
+        'Iron ore' : 8,
+        'Cloth' : 9,
+        'Silver ore' : 10,
+        'Bauxite' : 11,
+        'Cord' : 12,
+        'Magic stone' : 13,
+        'Wooden shaft' : 14,
+        'Sapphire' : 15,
+        'Solvent' : 16,
+        'Ruby' : 17,
+        'Hardener' : 18,
+        'Steel' : 19,
+        'Leather' : 20,
+        'Bone powder' : 21,
+        'String' : 22,
+        'Coke' : 23,
+        'Purified powder' : 24,
+        'Silver alloy' : 25,
+        'Steel mold' : 27,
+        'Silver mold' : 28,
+        'Blacksmith frame' : 29,
+        'Artisan frame' : 30,
+        'Rope' : 31,
+        'Silver frame' : 32,
+        'Metal plate' : 33,
+        'Metallic fiber' : 34,
+        'Crafted leather' : 35,
+        'Quality Cloth' : 36,
+        'Blacksmith mold' : 37,
+        'Artisan mold' : 38
+}
+
 def get_herbs():
     telega.send_command('⚗️Алхимия')
     txt = telega.last_msg().message
@@ -160,5 +200,25 @@ def get_herbs():
             continue
         code = herb_by_name[res[0]]
         ret[code] = int(res[1])
+
+    return ret
+
+def get_stock():
+    telega.send_command('📦Ресурсы')
+    txt = telega.last_msg().message
+    ret = {}
+    for line in txt.split('\n'):
+        res = parse('{} ({})', line)
+        if res == None:
+            continue
+        code = resource_by_name[res[0]]
+        ret[code] = int(res[1])
+
+    for line in txt.split('\n'):
+        res = parse('/sg_{} {} ({})', line)
+        if res == None:
+            continue
+        code = resource_by_name[res[1]]
+        ret[code] = int(res[2])
 
     return ret
