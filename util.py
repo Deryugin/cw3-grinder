@@ -83,6 +83,10 @@ def handle_outer_monsters():
         return
 
     last_known_msg = m.message
+    dl = pcp.get("monsters_delay")
+    if dl != "":
+        time.sleep(int(dl))
+
 
     log("Helping monsters: " + m.message)
     fhp = pcp.get("fight_hp")
