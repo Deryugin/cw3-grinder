@@ -185,7 +185,7 @@ def sleep(n):
 def try_buy(code, max_cost):
     telega.send_command("/t_"+str(code))
     amount = int(status.get_money() / max_cost)
-    if 'по ' + str(amount) + '💰' in telega.last_msg().message:
+    if 'по ' + str(max_cost) + '💰' in telega.last_msg().message:
         if amount == 0:
             return
         telega.send_command("/wtb_"+str(code)+"_"+str(amount))
@@ -233,4 +233,7 @@ def stash_resources():
     for r in stash_resources.split(','):
         r = int(r)
         if r in stock and stock[r] > 0:
+            strr = str(r)
+            if len(strr) == 1:
+                strr = '0' + strr
             telega.send_command("/g_deposit " + str(r) + " " + str(stock[r]))
