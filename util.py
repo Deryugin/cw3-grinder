@@ -236,4 +236,4 @@ def stash_resources():
             strr = str(r)
             if len(strr) == 1:
                 strr = '0' + strr
-            telega.send_command("/g_deposit " + str(r) + " " + str(stock[r]))
+            telega.send_command("/g_deposit " + strr + " " + str(stock[r]))
