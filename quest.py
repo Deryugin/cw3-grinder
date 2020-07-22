@@ -109,6 +109,8 @@ def run():
                 q_idx = 2
             elif w[1][0] == 'k':
                 q_idx = 3
+            elif w[1][0] == 'r':
+                q_idx = random.randrange(0, 4)
 
             if q_message.button_count < q_idx:
                 return
