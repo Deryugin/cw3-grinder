@@ -23,20 +23,28 @@ money = 0
 hp = 0 # from 0 to 100
 last_stamina = datetime.datetime.now()
 next_stamina = 0
+last_upd_txt = ""
 
 has_target = False
 force_target = True
 
 def upd():
-    util.log("Update")
-    global stamina, force_upd, next_stamina, last_stamina, has_target, hp, mana, money
-    force_upd = 0
     telega.send_command('🏅Герой')
-    txt = telega.last_msg().message
+    upd_from_txt(telega.last_msg().message)
+
+def upd_from_txt(txt):
+    global stamina, force_upd, next_stamina, last_stamina, has_target, hp, mana, money, last_upd_txt
+    force_upd = 0
+    if txt == last_upd_txt:
+        return
+    if not 'Битва семи замков через' in txt:
+        return
     if not 'Состояние:' in txt:
         force_upd = 1
         return
+    util.log("Update")
 
+    last_upd_txt = txt
     tmp = ""
 
     p = parse('{}выносливость: {}/{}', txt)
@@ -69,11 +77,14 @@ def upd():
     if len(re.compile('⚗️В лавке').findall(txt)) > 0:
         has_target = False
 
-def get_stamina():
+def get_stamina(weak=False):
     util.log("Get stam")
     global stamina, force_upd, next_stamina, last_stamina
     now = datetime.datetime.now()
-    if force_upd == True or ((now - last_stamina).seconds / 60) > next_stamina:
+    if weak:
+        util.log("Stamina weak update: " + str(stamina + (((now - last_stamina).seconds) / (60 * 60))))
+        return stamina + ((now - last_stamina).seconds) / (60 * 60)
+    if ((now - last_stamina).seconds / 60) > next_stamina + 1:
         upd()
         last_stamina = now
     util.log("Stamina: " + str(stamina) + "; next " + str(int(next_stamina - ((now - last_stamina).seconds / 60))))
@@ -224,3 +235,13 @@ def get_stock():
         ret[code] = int(res[2])
 
     return ret
+
+def stupid_human():
+    h = pcp.get("human")
+    if h == "":
+        return False
+    res = random.randrange(0, 100) < int(h)
+    if res:
+        util.log("Oh noes, I'm stoopid hooman :(")
+
+    return res

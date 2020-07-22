@@ -12,7 +12,7 @@ from telethon import TelegramClient, sync
 from telethon.tl.custom import Message
 from enum import Enum
 
-import util, pcp
+import util, pcp, status
 
 api_hash = pcp.get('api_hash')
 api_id = pcp.get('api_id')
@@ -41,6 +41,7 @@ def last_msg():
         while True:
             msg = msgs[idx]
             if msg.from_id == game_bot_id:
+                status.upd_from_txt(msg.message)
                 return msg
             idx = idx + 1
 

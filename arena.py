@@ -1,5 +1,6 @@
 import datetime
 import random
+import time
 from telethon import TelegramClient, sync
 from enum import Enum
 
@@ -29,6 +30,9 @@ def arena_try():
     global wait_hr
     global wait_day
 
+    if status.get_money() < 5:
+        return
+
     cur_day = int(datetime.datetime.utcnow().strftime('%d'))
     time = datetime.datetime.time(datetime.datetime.utcnow())
 
@@ -49,6 +53,7 @@ def arena_try():
     if wait_hr == time.hour:
         return
 
+    util.sleep(random.randrange(0, 1200))
     telega.send_command('🗺Квесты');
     message = telega.last_msg()
     if '📯Арена 🔒' in message.message:
@@ -77,7 +82,8 @@ def arena_try():
             telega.send_command('▶️Быстрый бой')
             arena_wait()
             message = telega.last_msg()
-            if 'У тебя нет денег' in message.message or 'Тебе бы подлечиться.' in message.message:
+            hp = status.get_hp()
+            if 'У тебя нет денег' in message.message or 'Тебе бы подлечиться.' in message.message or hp < 100:
                 wait_hr = time.hour
                 return
             if 'Даже драконы не могут' in message.message:
