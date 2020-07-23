@@ -109,14 +109,14 @@ def run():
                 q_idx = 2
             elif w[1][0] == 'k':
                 q_idx = 3
-            elif w[1][0] == 'r':
-                q_idx = random.randrange(0, 4)
 
             if q_message.button_count < q_idx:
                 return
             q = quest_cmd[q_idx]
 
             for it in range(0, int(w[0])):
+                if w[1][0] == 'r':
+                    q_idx = random.randrange(0, 4)
                 q_message.click(q_idx)
                 message = telega.last_msg()
 
