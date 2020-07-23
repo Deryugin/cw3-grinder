@@ -58,6 +58,8 @@ while True:
                 telega.send_command('/go')
             else:
                 message.click(0)
+        elif 'To accept their offer, you shall /pledge to protect.' in message.message:
+            telega.send_command('/pledge')
         elif not ('Кто знает' in message.message or 'драконы не могут драться' in message.message or 'отправился' in message.message or 'одолела' in message.message or 'сражение через' in message.message or 'занят другим' in message.message or 'Рейтинги обновлены: /top5 & /top6.' in message.message or 'Получено:' in message.message):
             util.log("Could not parse any key words")
 
@@ -95,6 +97,8 @@ while True:
                 message.click(0)
 
             util.log("Defend the KOPOBAH!")
+        elif 'To accept their offer, you shall /pledge to protect.' in message.message:
+            telega.send_command('/pledge')
         elif not ('Кто знает' in message.message or 'драконы не могут драться' in message.message or 'отправился' in message.message or 'одолела' in message.message or 'сражение через' in message.message or 'занят другим' in message.message or 'Рейтинги обновлены: /top5 & /top6.' in message.message or 'Получено:' in message.message):
             util.log("Could not parse any key words")
 
