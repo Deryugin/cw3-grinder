@@ -116,7 +116,7 @@ def run():
 
             for it in range(0, int(w[0])):
                 if w[1][0] == 'r':
-                    q_idx = random.randrange(0, 4)
+                    q_idx = random.randrange(0, 3)
                 q_message.click(q_idx)
                 message = telega.last_msg()
 
