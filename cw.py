@@ -63,7 +63,7 @@ while True:
         elif not ('Кто знает' in message.message or 'драконы не могут драться' in message.message or 'отправился' in message.message or 'одолела' in message.message or 'сражение через' in message.message or 'занят другим' in message.message or 'Рейтинги обновлены: /top5 & /top6.' in message.message or 'Получено:' in message.message):
             util.log("Could not parse any key words")
 
-    if (now.hour == 13 or now.hour == 21 or now.hour == 5) and now.minute >= 50:
+    if (now.hour == 13 or now.hour == 21 or now.hour == 5) and now.minute >= 30:
         if status.is_rest() == True:
             time.sleep(random.randrange(0, 1200))
             quest.go_def()

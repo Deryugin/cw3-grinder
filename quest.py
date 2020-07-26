@@ -57,6 +57,8 @@ wait_hr = -1
 def run():
     global wait_hr
     global time
+
+    time = datetime.datetime.time(datetime.datetime.utcnow())
     if wait_hr != -1:
         if time.hour > wait_hr:
             wait_hr = -1
