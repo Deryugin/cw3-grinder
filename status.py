@@ -215,6 +215,7 @@ def get_herbs():
     return ret
 
 def get_stock():
+    telega.send_command('/inv')
     telega.send_command('📦Ресурсы')
     txt = telega.last_msg().message
     ret = {}
