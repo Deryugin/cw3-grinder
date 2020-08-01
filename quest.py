@@ -119,7 +119,14 @@ def run():
             for it in range(0, int(w[0])):
                 if w[1][0] == 'r':
                     q_idx = random.randrange(0, 3)
-                q_message.click(q_idx)
+                expected_text = "🌲Лес"
+                if q_idx == 1:
+                    expected_text = "🍄Болото"
+                elif q_idx == 2:
+                    expected_text = "🏔Долина"
+                else:
+                    expected_text = "🗡ГРАБИТЬ КОРОВАНЫ"
+                telega.click(q_message. q_idx, expected_text)
                 message = telega.last_msg()
 
                 last_msg_id = message.id

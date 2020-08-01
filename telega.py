@@ -123,10 +123,35 @@ def send_msg(uname, text):
         util.log("Caught exception, return empty string") # wtf should be message type
         return
 
+retries = 0
 def send_command(cmd):
-    global game_bot_id, client
+    global game_bot_id, client, retries
 
     try:
+        if cmd[0] != '/':
+            found = False
+            back_found = False
+            last = last_msg()
+            for row in last.buttons:
+                for button in row:
+                    if button.text == cmd:
+                        found = True
+                    if button.text == '⬅Назад':
+                        back_found = True
+            if not found:
+                if retries > 2:
+                    print("Fail for command ", cmd)
+                    sys.exit()
+                retries += 1
+                if back_found:
+                    send_command('⬅Назад')
+                    send_command(cmd)
+                else:
+                    print("No such button: " + cmd)
+                    send_command("/me")
+                    send_command(cmd)
+                return
+        retries = 0
         client.send_message(game_bot, cmd)
         retry = 0
         util.log('Command is ' + cmd)
@@ -138,3 +163,13 @@ def send_command(cmd):
         util.log("Command " + cmd + " answer timeout!")
     except:
         util.log("Fail..")
+
+def click(message, idx, expected_text):
+    cur_idx = 0
+    for row in message.buttons:
+        for button in row:
+            cur_idx += 1
+            if cur_idx == idx and expected_text == button.text:
+                message.click(idx)
+                return
+    print("Button " + expected_text + " was not found")

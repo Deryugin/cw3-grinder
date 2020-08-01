@@ -63,7 +63,7 @@ def arena_try():
     if message.button_count < 4:
         return
 
-    message.click(4)
+    telega.click(message, 4, "📯Арена")
     message = telega.last_msg()
 
     if 'Ты сейчас занят другим приключением' in message.message:

@@ -8,6 +8,7 @@ import datetime
 import random
 import pcp
 import time
+import sys
 from telethon import TelegramClient, sync
 from enum import Enum
 
@@ -57,7 +58,7 @@ while True:
             if '/go' in message.message:
                 telega.send_command('/go')
             else:
-                message.click(0)
+                telega.click(message, 0, "🧹Вмешатьсяя")
         elif 'To accept their offer, you shall /pledge to protect.' in message.message:
             telega.send_command('/pledge')
         elif not ('Кто знает' in message.message or 'драконы не могут драться' in message.message or 'отправился' in message.message or 'одолела' in message.message or 'сражение через' in message.message or 'занят другим' in message.message or 'Рейтинги обновлены: /top5 & /top6.' in message.message or 'Получено:' in message.message):
@@ -94,7 +95,7 @@ while True:
             if '/go' in message.message:
                 telega.send_command('/go')
             else:
-                message.click(0)
+                telega.click(message, 0, "🧹Вмешатьсяя")
 
             util.log("Defend the KOPOBAH!")
         elif 'To accept their offer, you shall /pledge to protect.' in message.message:
