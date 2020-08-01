@@ -90,6 +90,8 @@ def run():
     for i in lines:
         if len(i) == 0:
             continue
+        if "#" in i:
+            continue
 
         util.log("Iterator = " + i)
 
@@ -114,19 +116,25 @@ def run():
 
             if q_message.button_count < q_idx:
                 return
-            q = quest_cmd[q_idx]
 
             for it in range(0, int(w[0])):
                 if w[1][0] == 'r':
                     q_idx = random.randrange(0, 3)
-                expected_text = "🌲Лес"
-                if q_idx == 1:
-                    expected_text = "🍄Болото"
-                elif q_idx == 2:
-                    expected_text = "🏔Долина"
-                else:
-                    expected_text = "🗡ГРАБИТЬ КОРОВАНЫ"
-                telega.click(q_message. q_idx, expected_text)
+
+                if pcp.get("seeker") != "":
+                    if it > 0:
+                        telega.send_command('🗺Квесты')
+                        q_message = telega.last_msg()
+                    for line in q_message.text.split('\n'):
+                        if 'Лес' in line and '🔥' in line:
+                            q_idx = 0
+                        elif 'Болото' in line and '🔥' in line:
+                            q_idx = 1
+                        elif 'Горная долина' in line and '🔥' in line:
+                            q_idx = 2
+                    print("Seeker q_idx: ", q_idx)
+                q = quest_cmd[q_idx]
+                telega.click(q_message, q_idx, q)
                 message = telega.last_msg()
 
                 last_msg_id = message.id
