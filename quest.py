@@ -153,7 +153,7 @@ def run():
                 elif '8' in message.message:
                     util.log("Wait 8 min..")
                     util.sleep(8 * 60 + random.randrange(15, 60))
-                elif 'Тебе бы подлечиться.' in message.message:
+                elif 'Тебе бы подлечиться.' in message.message or 'Слишком мало единиц выносливости. Приходи попозже, когда отдохнешь.' in message.message:
                     wait_hr = time.hour
                     return
                 else:

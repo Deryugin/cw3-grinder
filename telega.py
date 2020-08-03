@@ -134,6 +134,7 @@ def send_command(cmd):
             last = last_msg()
             if last.buttons is None:
                 found = True
+                retries = 0
             else:
                 for row in last.buttons:
                     for button in row:
@@ -141,7 +142,9 @@ def send_command(cmd):
                             found = True
                         if button.text == '⬅Назад':
                             back_found = True
-                if not found:
+                if found:
+                    retries = 0
+                else:
                     if retries > 2:
                         print("Fail for command ", cmd)
                         sys.exit()
@@ -155,7 +158,6 @@ def send_command(cmd):
                         if cmd != "🏅Герой":
                             send_command(cmd)
                     return
-        retries = 0
         client.send_message(game_bot, cmd)
         retry = 0
         util.log('Command is ' + cmd)
