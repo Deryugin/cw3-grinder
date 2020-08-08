@@ -25,6 +25,7 @@ last_stamina = datetime.datetime.now()
 next_stamina = 0
 last_upd_txt = ""
 
+is_aiming_var = False
 has_target = False
 force_target = True
 
@@ -77,6 +78,8 @@ def upd_from_txt(txt):
     if len(re.compile('⚗️В лавке').findall(txt)) > 0:
         has_target = False
 
+    is_aiming_var = '🎯' in txt
+
 def get_stamina(weak=False):
     util.log("Get stam")
     global stamina, force_upd, next_stamina, last_stamina
@@ -114,6 +117,9 @@ def is_rest():
     util.log("Has_target = " + str(has_target))
 
     return not has_target
+
+def is_aiming():
+    return is_aiming_var
 
 def send_report():
     m = telega.last_msg()

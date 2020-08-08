@@ -99,6 +99,10 @@ def handle_outer_monsters():
         log("No stamina")
         return
 
+    if status.is_aiming():
+        log("Aiming")
+        return
+
     m.forward_to(telega.game_bot)
 
     time.sleep(2)
