@@ -123,6 +123,57 @@ def send_msg(uname, text):
         util.log("Caught exception, return empty string") # wtf should be message type
         return
 
+def simmilar_chars(a, b):
+    if ord(a) > ord(b):
+        t = a
+        a = b
+        b = t
+    # Latin first, cyrillic second
+    if a == 'A' and b == 'А':
+        return True
+    if a == 'a' and b == 'а':
+        return True
+    if a == 'B' and b == 'В':
+        return True
+    if a == 'C' and b == 'С':
+        return True
+    if a == 'c' and b == 'с':
+        return True
+    if a == 'E' and b == 'е':
+        return True
+    if a == 'e' and b == 'е':
+        return True
+    if a == 'H' and b == 'Н':
+        return True
+    if a == 'K' and b == 'К':
+        return True
+    if a == 'M' and b == 'М':
+        return True
+    if a == 'O' and b == 'О':
+        return True
+    if a == 'o' and b == 'о':
+        return True
+    if a == 'P' and b == 'Р':
+        return True
+    if a == 'p' and b == 'р':
+        return True
+    if a == 'T' and b == 'Т':
+        return True
+    if a == 'X' and b == 'Х':
+        return True
+    if a == 'y' and b == 'у':
+        return True
+    return a == b
+
+def button_fits(ctxt, btxt):
+    if len(ctxt) != len(btxt):
+        return False
+    for i in range(0, len(ctxt)):
+        if not simmilar_chars(ctxt[i], btxt[i]):
+            return False
+
+    return True
+
 retries = 0
 def send_command(cmd):
     global game_bot_id, client, retries
@@ -131,33 +182,41 @@ def send_command(cmd):
         if cmd[0] != '/':
             found = False
             back_found = False
+            back_cmd = '⬅Назад'
             last = last_msg()
             if last.buttons is None:
                 found = True
+                print("No buttons -> no command sent! Try /me")
+                send_command("/me")
+                if cmd != "🏅Герой":
+                    send_command(cmd)
+                return
+
+            for row in last.buttons:
+                for button in row:
+                    if button_fits(cmd, button.text):
+                        found = True
+                    if button_fits('⬅Назад', button.text):
+                        back_found = True
+                        back_cmd = button.text
+            if found:
                 retries = 0
             else:
-                for row in last.buttons:
-                    for button in row:
-                        if button.text == cmd:
-                            found = True
-                        if button.text == '⬅Назад':
-                            back_found = True
-                if found:
-                    retries = 0
+                if retries > 2:
+                    print("Fail for command ", cmd)
+                    sys.exit()
+                retries += 1
+                if back_found:
+                    send_command('⬅Назад')
+                    send_command(cmd)
                 else:
-                    if retries > 2:
-                        print("Fail for command ", cmd)
-                        sys.exit()
-                    retries += 1
-                    if back_found:
-                        send_command('⬅Назад')
+                    print("No such button: " + cmd)
+                    send_command("/me")
+                    if cmd != "🏅Герой":
                         send_command(cmd)
-                    else:
-                        print("No such button: " + cmd)
-                        send_command("/me")
-                        if cmd != "🏅Герой":
-                            send_command(cmd)
-                    return
+                return
+            click(last, -1, cmd)
+            return
         client.send_message(game_bot, cmd)
         if cmd != "/me":
             retry = 0
@@ -172,16 +231,18 @@ def send_command(cmd):
         util.log("Fail..")
 
 def click(message, idx, expected_text):
+    print("Click text " + expected_text)
     cur_idx = 0
     if message.buttons is None:
         print("No buttons wtf #" + message.text + "#")
         return
     for row in message.buttons:
         for button in row:
-            if expected_text == button.text:
-                if cur_idx != idx:
+            if button_fits(expected_text, button.text):
+                if cur_idx != idx and idx >= 0:
                     print("Different index: ", cur_idx, ", expected ", idx)
-                message.click(idx)
+                message.click(cur_idx)
+                sleep(3)
                 return
             cur_idx += 1
     print("Button " + expected_text + " was not found")
