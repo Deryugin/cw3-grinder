@@ -87,7 +87,6 @@ def handle_outer_monsters():
     if dl != "":
         time.sleep(int(dl))
 
-
     log("Helping monsters: " + m.message)
     fhp = pcp.get("fight_hp")
     hp = status.get_hp()
@@ -101,6 +100,10 @@ def handle_outer_monsters():
 
     if status.is_aiming():
         log("Aiming")
+        return
+
+    if not status.is_rest():
+        log("Busy")
         return
 
     m.forward_to(telega.game_bot)

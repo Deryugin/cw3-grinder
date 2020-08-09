@@ -242,6 +242,8 @@ def click(message, idx, expected_text):
                 if cur_idx != idx and idx >= 0:
                     print("Different index: ", cur_idx, ", expected ", idx)
                 message.click(cur_idx)
+                if expected_text != button.text:
+                    print("Cheap shot: #"+expected_text+"#"+Button.text)
                 sleep(3)
                 return
             cur_idx += 1
