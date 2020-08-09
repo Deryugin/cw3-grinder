@@ -159,7 +159,8 @@ def send_command(cmd):
                             send_command(cmd)
                     return
         client.send_message(game_bot, cmd)
-        retry = 0
+        if cmd != "/me":
+            retry = 0
         util.log('Command is ' + cmd)
         for retry in range(0, 10):
             sleep(3)
