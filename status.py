@@ -78,6 +78,7 @@ def upd_from_txt(txt):
     if len(re.compile('⚗️В лавке').findall(txt)) > 0:
         has_target = False
 
+    global is_aiming_var
     is_aiming_var = '🎯' in txt
 
 def get_stamina(weak=False):
@@ -119,6 +120,7 @@ def is_rest():
     return not has_target
 
 def is_aiming():
+    global is_aiming_var
     return is_aiming_var
 
 def send_report():
