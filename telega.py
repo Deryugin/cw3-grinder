@@ -187,6 +187,7 @@ def send_command(cmd):
             if last.buttons is None:
                 found = True
                 print("No buttons -> no command sent! Try /me")
+                sleep(3)
                 send_command("/me")
                 if cmd != "🏅Герой":
                     send_command(cmd)
