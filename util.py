@@ -127,21 +127,22 @@ def handle_outer_monsters():
 last_self_msg = ""
 def handle_self_monsters():
     global last_self_msg
-    m = telega.last_msg()
-    if m is None:
-        return
-    if m.message is None:
-        return
-    if m.message != last_self_msg and "/fight_" in m.message:
-        log("Forwarding: " + m.message)
-        dest = pcp.get("monsters_dest")
-        if dest == "":
+    msgs = telega.last_msgs()
+    for m in msgs:
+        if m is None:
             return
-        if dest[0] != '@':
-            dest = int(dest)
-        m.forward_to(dest)
+        if m.message is None:
+            return
+        if m.message != last_self_msg and "/fight_" in m.message:
+            log("Forwarding: " + m.message)
+            dest = pcp.get("monsters_dest")
+            if dest == "":
+                return
+            if dest[0] != '@':
+                dest = int(dest)
+            m.forward_to(dest)
 
-        last_self_msg = m.message
+            last_self_msg = m.message
 
 last_bar_msg = ""
 def handle_bartrender():

@@ -49,6 +49,29 @@ def last_msg():
         util.log("Caught exception, return empty string") # wtf should be message type
         return Message(message="", id=0)
 
+def last_msgs():
+    global client
+
+    ret = []
+
+    try:
+        idx = 0
+
+        msgs = client.get_messages(game_bot, limit=msg_limit)
+
+        while True:
+            msg = msgs[idx]
+            if msg.from_id == game_bot_id:
+                status.upd_from_txt(msg.message)
+                ret.append(msg)
+            idx = idx + 1
+            if idx >= msg_limit / 2:
+                return ret
+
+    except:
+        util.log("Caught exception, return empty string") # wtf should be message type
+        return Message(message="", id=0)
+
 entity_dict = { }
 def last_msg_uname(uname):
     global client
