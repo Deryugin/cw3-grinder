@@ -140,9 +140,10 @@ def handle_self_monsters():
                 return
             if dest[0] != '@':
                 dest = int(dest)
-            m.forward_to(dest)
-
+            if last_self_msg != "":
+                m.forward_to(dest)
             last_self_msg = m.message
+            break
 
 last_bar_msg = ""
 def handle_bartrender():
