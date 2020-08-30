@@ -94,7 +94,7 @@ def handle_outer_monsters():
         log("Low hp: " + str(hp))
         return
 
-    if status.get_stamina() < 1:
+    if status.get_stamina(weak=True) < 1:
         log("No stamina")
         return
 
