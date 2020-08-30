@@ -134,7 +134,7 @@ def handle_self_monsters():
         if m.message is None:
             return
         if "/fight_" in m.message:
-            if m.message != last_self_msg
+            if m.message != last_self_msg:
                 log("Forwarding: " + m.message)
                 dest = pcp.get("monsters_dest")
                 if dest == "":
