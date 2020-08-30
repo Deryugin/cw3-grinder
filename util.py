@@ -133,16 +133,17 @@ def handle_self_monsters():
             return
         if m.message is None:
             return
-        if m.message != last_self_msg and "/fight_" in m.message:
-            log("Forwarding: " + m.message)
-            dest = pcp.get("monsters_dest")
-            if dest == "":
-                return
-            if dest[0] != '@':
-                dest = int(dest)
-            if last_self_msg != "":
-                m.forward_to(dest)
-            last_self_msg = m.message
+        if "/fight_" in m.message:
+            if m.message != last_self_msg
+                log("Forwarding: " + m.message)
+                dest = pcp.get("monsters_dest")
+                if dest == "":
+                    return
+                if dest[0] != '@':
+                    dest = int(dest)
+                if last_self_msg != "":
+                    m.forward_to(dest)
+                last_self_msg = m.message
             break
 
 last_bar_msg = ""
