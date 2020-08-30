@@ -31,6 +31,7 @@ force_target = True
 
 def upd():
     telega.send_command('🏅Герой')
+    util.log("Update")
     upd_from_txt(telega.last_msg().message)
 
 def upd_from_txt(txt):
@@ -43,7 +44,6 @@ def upd_from_txt(txt):
     if not 'Состояние:' in txt:
         force_upd = 1
         return
-    util.log("Update")
 
     last_upd_txt = txt
     tmp = ""
