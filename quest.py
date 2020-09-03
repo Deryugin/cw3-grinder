@@ -138,6 +138,9 @@ def run():
                 message = telega.last_msg()
 
                 last_msg_id = message.id
+                if '3' in message.message:
+                    util.log("Wait 3 min..")
+                    util.sleep(3 * 60 + random.randrange(15, 60))
                 if '4' in message.message:
                     util.log("Wait 4 min..")
                     util.sleep(4 * 60 + random.randrange(15, 60))
