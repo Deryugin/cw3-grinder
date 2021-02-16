@@ -12,6 +12,8 @@ from time import sleep
 last_msg_id = 0
 
 while True:
+    telega.send_command("🏰Замок")
+    telega.send_command("🍺Таверна")
     telega.send_command("🎲Играть в кости")
     for i in range(0, 300):
         message = telega.last_msg()
