@@ -206,7 +206,8 @@ resource_by_name = {
         'Crafted leather' : 35,
         'Quality Cloth' : 36,
         'Blacksmith mold' : 37,
-        'Artisan mold' : 38
+        'Artisan mold' : 38,
+        '💘Cupid\'s Essence' : 'e164',
 }
 
 def get_herbs():
