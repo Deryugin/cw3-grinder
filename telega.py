@@ -40,13 +40,14 @@ def last_msg():
 
         while True:
             msg = msgs[idx]
-            if msg.from_id == game_bot_id:
+            if msg.from_id == game_bot_id or (not msg.peer_id is None and msg.peer_id.user_id == game_bot_id):
                 status.upd_from_txt(msg.message)
                 return msg
             idx = idx + 1
 
-    except:
+    except Exception as e:
         util.log("Caught exception, return empty string") # wtf should be message type
+        print(e)
         return Message(message="", id=0)
 
 def last_msgs():
@@ -61,7 +62,7 @@ def last_msgs():
 
         while True:
             msg = msgs[idx]
-            if msg.from_id == game_bot_id:
+            if msg.from_id == game_bot_id or (not msg.peer_id is None and msg.peer_id.user_id == game_bot_id):
                 status.upd_from_txt(msg.message)
                 ret.append(msg)
             idx = idx + 1
@@ -251,7 +252,7 @@ def send_command(cmd):
         for retry in range(0, 10):
             sleep(3)
             message = last_msg()
-            if message.from_id == game_bot_id:
+            if message.from_id == game_bot_id or (not message.peer_id is None and message.peer_id.user_id == game_bot_id):
                 return
         util.log("Command " + cmd + " answer timeout!")
     except:
