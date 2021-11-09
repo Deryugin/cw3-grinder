@@ -133,7 +133,7 @@ def handle_self_monsters():
             return
         if m.message is None:
             return
-        if "/fight_" in m.message and (m.from_id == game_bot_id or (not m.peer_id is None and m.peer_id.user_id == game_bot_id)):
+        if "/fight_" in m.message and (m.from_id == telega.game_bot_id or (not m.peer_id is None and m.peer_id.user_id == telega.game_bot_id)):
             if m.message != last_self_msg:
                 log("Forwarding: " + m.message)
                 dest = pcp.get("monsters_dest")
