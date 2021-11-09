@@ -126,14 +126,14 @@ def handle_outer_monsters():
 
 last_self_msg = ""
 def handle_self_monsters():
-    global last_self_msg
+    global last_self_msg, game_bot_id
     msgs = telega.last_msgs()
     for m in msgs:
         if m is None:
             return
         if m.message is None:
             return
-        if "/fight_" in m.message:
+        if "/fight_" in m.message and (m.from_id == game_bot_id or (not m.peer_id is None and m.peer_id.user_id == game_bot_id)):
             if m.message != last_self_msg:
                 log("Forwarding: " + m.message)
                 dest = pcp.get("monsters_dest")
